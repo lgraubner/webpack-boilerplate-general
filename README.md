@@ -1,6 +1,6 @@
-# Webpack Boilerplate
+# Webpack Boilerplate for Wordpress
 
-Simple Webpack config supporting React, Sass and common optimizations.
+Simple Webpack config supporting React, Sass and common optimizations. Designed for use with [Sage](https://github.com/roots/sage).
 
 ## Usage
 
