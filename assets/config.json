@@ -9,5 +9,6 @@
   "output": {
     "path": "dist",
     "publicPath": "/app/themes/yourtheme/dist/"
-  }
+  },
+  "developmentURL": "http://example.com"
 }

@@ -1,7 +1,9 @@
+/* eslint import/no-extraneous-dependencies:0 */
 const webpack = require('webpack');
 const path = require('path');
 const CleanPlugin = require('clean-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const forEach = require('lodash.foreach');
 
 const config = require('./assets/config');
@@ -112,6 +114,13 @@ const webpackConfig = {
       filename: 'assets.json',
       fullPath: false,
       processOutput: assetsPluginProcessOutput,
+    }),
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      port: 8080,
+      proxy: {
+        target: config.developmentURL,
+      },
     }),
   ],
   eslint: {
