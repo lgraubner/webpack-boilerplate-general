@@ -117,9 +117,9 @@ const webpackConfig = {
     }),
     new BrowserSyncPlugin({
       host: 'localhost',
-      port: 8080,
+      port: config.devPort,
       proxy: {
-        target: config.developmentURL,
+        target: config.devUrl,
       },
     }),
   ],
