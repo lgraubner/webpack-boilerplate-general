@@ -9,7 +9,5 @@
   "output": {
     "path": "dist",
     "publicPath": "/app/themes/yourtheme/dist/"
-  },
-  "devUrl": "http://example.com.dev",
-  "devPort": 3000
+  }
 }
