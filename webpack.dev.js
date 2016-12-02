@@ -102,10 +102,6 @@ const webpackConfig = {
       },
     }),
   ],
-  eslint: {
-    failOnWarning: false,
-    failOnError: true,
-  },
   target: 'web',
   devTool: 'eval',
 };
