@@ -33,7 +33,7 @@ const webpackConfig = {
   module: {
     preLoaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint-loader',
       },
@@ -51,22 +51,22 @@ const webpackConfig = {
       {
         test: /\.css$/,
         loaders: [
-          'css?+sourceMap',
+          'css-loader?+sourceMap',
         ],
       },
       {
         test: /\.scss$/,
         loaders: [
-          'style',
-          'css',
-          'sass',
+          'style-loader',
+          'css-loader',
+          'sass-loader',
         ],
       },
       {
         test: /.*\.(gif|png|jpe?g|svg)$/i,
         loaders: [
           'file-loader',
-          'image-webpack?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}',
+          'image-webpack-loader?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}',
         ],
       },
     ],

@@ -36,7 +36,7 @@ const webpackConfig = {
   module: {
     preLoaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'eslint-loader',
       },
@@ -54,19 +54,19 @@ const webpackConfig = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style', [
-          'css?-sourceMap',
-          'postcss',
+          'css-loader?-sourceMap',
+          'postcss-loader',
         ]),
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css!sass'),
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass'),
       },
       {
         test: /.*\.(gif|png|jpe?g|svg)$/i,
         loaders: [
           'file-loader',
-          'image-webpack?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}',
+          'image-webpack-loader?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}',
         ],
       },
     ],
