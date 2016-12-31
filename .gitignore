@@ -16,21 +16,8 @@ bower_components
 # mac files
 .DS_Store
 
-# vagrant
-.vagrant
-
-# wordpress
-www/*
-!www/.gitkeep
-
-# composer
-vendor/*
-composer.lock
-
 # PhpStorm
 .idea
 
 # build folder
 dist
-
-tournaments.json
