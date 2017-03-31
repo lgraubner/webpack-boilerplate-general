@@ -10,7 +10,7 @@ const config = require('./assets/config');
 
 const outputPath = path.join(__dirname, config.output.path);
 
-const assetsPluginProcessOutput = function (assets) {
+const assetsPluginProcessOutput = function process(assets) {
   const results = {};
 
   forEach(assets, (chunk, key) => {
@@ -31,55 +31,56 @@ const webpackConfig = {
     filename: 'scripts/[name].js',
   },
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint-loader',
+        enforce: 'pre',
       },
-    ],
-    loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015'],
-          cacheDirectory: true,
+          presets: [['es2015', { modules: false }]],
         },
       },
       {
-        test: /\.css$/,
-        loaders: [
-          'css-loader?+sourceMap',
-        ],
-      },
-      {
-        test: /\.scss$/,
-        loaders: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        test: /\.s?css$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /.*\.(gif|png|jpe?g|svg)$/i,
-        loaders: [
-          'file-loader',
-          'image-webpack-loader?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}',
+        loader: [
+          {
+            loader: 'file-loader',
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              optipng: {
+                optimizationLevel: 7,
+              },
+              gifcicle: {
+                interlaced: false,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              },
+              mozjpeg: {
+                quality: 65,
+              },
+            },
+          },
         ],
       },
     ],
   },
   resolve: {
-    root: [
-      path.resolve('./assets/scripts'),
-      path.resolve('./assets/styles'),
-    ],
-    extensions: ['', '.js'],
-    modulesDirectories: [
-      'node_modules',
-    ],
+    extensions: ['.js'],
+    modules: ['node_modules'],
   },
   plugins: [
     new CleanPlugin([outputPath]),
@@ -103,7 +104,7 @@ const webpackConfig = {
     }),
   ],
   target: 'web',
-  devTool: 'eval',
+  devtool: 'eval-source-map',
 };
 
 module.exports = webpackConfig;

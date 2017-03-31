@@ -1,7 +1,6 @@
 /* eslint import/no-extraneous-dependencies:0 */
 const webpack = require('webpack');
 const path = require('path');
-const autoprefixer = require('autoprefixer');
 const CleanPlugin = require('clean-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -13,7 +12,7 @@ const config = require('./assets/config');
 
 const outputPath = path.join(__dirname, config.output.path);
 
-const assetsPluginProcessOutput = function (assets) {
+const assetsPluginProcessOutput = function process(assets) {
   const results = {};
 
   forEach(assets, (chunk, key) => {
@@ -34,56 +33,84 @@ const webpackConfig = {
     filename: 'scripts/[name]_[chunkhash].js',
   },
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: 'eslint-loader',
+        loader: {
+          loader: 'eslint-loader',
+          options: {
+            failOnWarning: false,
+            failOnError: true,
+          },
+        },
+        enforce: 'pre',
       },
-    ],
-    loaders: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015'],
+          presets: [['es2015', { modules: false }]],
           cacheDirectory: true,
         },
       },
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', [
-          'css-loader?-sourceMap',
-          'postcss-loader',
-        ]),
-      },
-      {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass'),
+        test: /\.s?css$/,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: false,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+            },
+            {
+              loader: 'sass-loader',
+            },
+          ],
+        }),
       },
       {
         test: /.*\.(gif|png|jpe?g|svg)$/i,
-        loaders: [
-          'file-loader',
-          'image-webpack-loader?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}',
+        loader: [
+          {
+            loader: 'file-loader',
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              optipng: {
+                optimizationLevel: 7,
+              },
+              gifcicle: {
+                interlaced: false,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              },
+              mozjpeg: {
+                quality: 65,
+              },
+            },
+          },
         ],
       },
     ],
   },
   resolve: {
-    root: [
-      path.resolve('./assets/scripts'),
-      path.resolve('./assets/styles'),
-    ],
-    extensions: ['', '.js'],
-    modulesDirectories: [
-      'node_modules',
-    ],
+    extensions: ['.js'],
+    modules: ['node_modules'],
   },
   plugins: [
     new CleanPlugin([outputPath]),
-    new ExtractTextPlugin('styles/[name]_[hash].css', {
+    new ExtractTextPlugin({
+      filename: 'styles/[name]_[hash].css',
       allChunks: true,
     }),
     new webpack.DefinePlugin({
@@ -97,34 +124,20 @@ const webpackConfig = {
       fullPath: false,
       processOutput: assetsPluginProcessOutput,
     }),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
       },
+      sourceMap: true,
     }),
     new OptimizeCssAssetsPlugin({
       cssProcessor: cssnano,
       cssProcessorOptions: { discardComments: { removeAll: true } },
       canPrint: true,
     }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
   ],
-  postcss: [
-    autoprefixer({
-      browsers: [
-        'last 2 versions',
-        'android 4',
-        'opera 12',
-      ],
-    }),
-  ],
-  eslint: {
-    failOnWarning: false,
-    failOnError: true,
-  },
   target: 'web',
-  devTool: 'cheap-module-source-map',
+  devtool: 'cheap-module-source-map',
 };
 
 module.exports = webpackConfig;

@@ -1,23 +1,11 @@
-# Logs
-logs
-*.log
-
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 npm-debug.log
-
-# bower
-bower_components
-
-# sass temp
-.sass-cache
+yarn-error.log
 
 # mac files
 .DS_Store
-
-# PhpStorm
-.idea
 
 # build folder
 dist

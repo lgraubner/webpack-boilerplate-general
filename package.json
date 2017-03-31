@@ -1,57 +1,61 @@
 {
-  "name": "webpack-boilerplate-wordpress",
+  "name": "webpack-boilerplate-general",
   "version": "2.0.0",
   "description": "",
-  "author": {
-    "name": "Lars Graubner",
-    "email": "mail@larsgraubner.de"
-  },
-  "homepage": "https://larsgraubner.com",
+  "author": "Lars Graubner <mail@larsgraubner.de>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lgraubner/webpack-boilerplate-wordpress.git"
+    "url": "https://github.com/lgraubner/webpack-boilerplate-general.git"
   },
   "devDependencies": {
-    "assets-webpack-plugin": "3.5.0",
-    "autoprefixer": "6.5.3",
-    "babel-core": "6.18.2",
-    "babel-eslint": "7.1.1",
-    "babel-loader": "6.2.8",
-    "babel-polyfill": "6.16.0",
-    "babel-preset-es2015": "6.18.0",
-    "browser-sync": "2.18.2",
-    "browser-sync-webpack-plugin": "1.1.3",
-    "clean-webpack-plugin": "0.1.14",
-    "cross-env": "3.1.3",
-    "css-loader": "0.26.0",
-    "cssnano": "3.8.0",
-    "eslint": "3.10.2",
-    "eslint-config-airbnb": "13.0.0",
-    "eslint-loader": "1.6.1",
+    "assets-webpack-plugin": "^3.5.1",
+    "autoprefixer": "^6.7.7",
+    "babel-core": "^6.24.0",
+    "babel-eslint": "^7.2.1",
+    "babel-loader": "^6.4.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "browser-sync": "^2.18.8",
+    "browser-sync-webpack-plugin": "^1.1.4",
+    "clean-webpack-plugin": "^0.1.16",
+    "cross-env": "^4.0.0",
+    "css-loader": "^0.28.0",
+    "cssnano": "^3.10.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-prettier": "^1.5.0",
+    "eslint-loader": "^1.7.1",
     "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-jsx-a11y": "2.2.3",
-    "eslint-plugin-react": "6.7.1",
-    "extract-text-webpack-plugin": "1.0.1",
-    "file-loader": "0.9.0",
-    "image-webpack-loader": "3.0.0",
-    "imports-loader": "0.6.5",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.0",
+    "image-webpack-loader": "^3.3.0",
+    "imports-loader": "^0.7.1",
     "lodash.foreach": "4.5.0",
-    "node-sass": "3.13.0",
+    "node-sass": "^4.5.2",
     "optimize-css-assets-webpack-plugin": "1.3.0",
-    "resolve-url-loader": "1.4.3",
-    "sass-loader": "4.0.2",
-    "style-loader": "0.13.1",
-    "url-loader": "0.5.7",
-    "webpack": "1.13.3"
+    "postcss-loader": "^1.3.3",
+    "resolve-url-loader": "^2.0.2",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.16.1",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.3.2"
   },
   "engines": {
     "node": ">=4"
   },
   "license": "MIT",
-  "private": true,
   "scripts": {
-    "lint": "eslint assets/scripts",
-    "start": "cross-env NODE_ENV=development webpack --config webpack.dev.js -d --progress --watch",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js -p --progress"
+    "lint": "eslint assets/scripts/**/*.js",
+    "precommit": "lint-staged",
+    "dev": "cross-env NODE_ENV=development webpack --config webpack.dev.js --progress --watch",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js --progress"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --trailing-comma es5 --write",
+      "git add"
+    ]
   }
 }
