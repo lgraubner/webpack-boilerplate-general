@@ -37,7 +37,7 @@ const webpackConfig = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        loader: {
+        use: {
           loader: 'eslint-loader',
           options: {
             failOnWarning: false,
@@ -58,8 +58,8 @@ const webpackConfig = {
       {
         test: /\.s?css$/,
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: [
+          fallback: 'style-loader',
+          use: [
             {
               loader: 'css-loader',
               options: {
@@ -77,7 +77,7 @@ const webpackConfig = {
       },
       {
         test: /.*\.(gif|png|jpe?g|svg)$/i,
-        loader: [
+        use: [
           {
             loader: 'file-loader',
           },
