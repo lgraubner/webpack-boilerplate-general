@@ -52,29 +52,7 @@ const webpackConfig = {
       },
       {
         test: /.*\.(gif|png|jpe?g|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-          },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              optipng: {
-                optimizationLevel: 7,
-              },
-              gifcicle: {
-                interlaced: false,
-              },
-              pngquant: {
-                quality: '65-90',
-                speed: 4,
-              },
-              mozjpeg: {
-                quality: 65,
-              },
-            },
-          },
-        ],
+        loader: 'file-loader',
       },
     ],
   },
