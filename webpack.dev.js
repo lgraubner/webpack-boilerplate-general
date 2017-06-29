@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const path = require('path');
 const CleanPlugin = require('clean-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const forEach = require('lodash.foreach');
 
 const config = require('./assets/config');
@@ -73,16 +72,18 @@ const webpackConfig = {
       fullPath: false,
       processOutput: assetsPluginProcessOutput,
     }),
-    new BrowserSyncPlugin({
-      host: 'localhost',
-      port: config.devPort,
-      proxy: {
-        target: config.devUrl,
-      },
-    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
   ],
   target: 'web',
   devtool: 'eval-source-map',
+  devServer: {
+    contentBase: false,
+    hot: true,
+    proxy: {
+      '{**,!__webpack_hmr}': 'http://example.com',
+    },
+  },
 };
 
 module.exports = webpackConfig;

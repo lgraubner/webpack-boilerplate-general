@@ -154,6 +154,7 @@ const webpackConfig = {
       cssProcessorOptions: { discardComments: { removeAll: true } },
       canPrint: true,
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
   target: 'web',
   devtool: 'cheap-module-source-map',
